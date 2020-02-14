@@ -95,7 +95,6 @@ void shortestPath(int vertex) {
 		//cout << endl << endl;
 		if (i % 100 == 0) {
 			cout << "Looking up shortest path for " << i << " of " << numNodes - 1 << " amount of nodes" << endl;
-
 		}
 		else if (i == numNodes - 2) {
 			cout << "Looking up the shortest path for the last node" << endl;
@@ -108,48 +107,29 @@ void shortestPath(int vertex) {
 		//smallest path weight
 		//Of those ndoes...find the node with the smallest current weight.
 		for (int j = 0; j < numNodes; j++) {
-			//cout <<  " weight " << smallestWeight[j] << " at " << j << endl;
-
-		}
-		for (int j = 0; j < numNodes; j++) {
-		
-			//cout << "truth values at " << weightFound[j] << endl;
-		}
-		for (int j = 0; j < numNodes; j++) {
 			if (weightFound[j] == false) {
 				if (smallestWeight[j] < minWeight) {
 					v = j;
 					minWeight = smallestWeight[v];
-					
-					//cout << " SMALLEST WEIGHT " << minWeight <<  " AT " << v << endl;
 				}
 			}
 		}
 
 		//Ignore non connected nodes.
 		if (v != -1) {
-
-			//When I drew the red line on my notes.  
 			weightFound[v] = true;
-			
 			//Now that we've found a new shortest possible weight (at node v)
 			//look at all of v's neighborly costs, and see if we can get to v's neighbors
 			//using v, at a better weight than what we already know.
-
-
 			for (int j = 0; j < numNodes; j++) {
 				if (weightFound[j] == false) {
-					//cout << "the min wieght" << minWeight << " +weights " << weights(v, j) << " < smlstWt=" << smallestWeight[j] << " //V=" << v << " j=" << j << endl;
 					if (minWeight + (weights(v, j)) < smallestWeight[j]) {
-						
 						smallestWeight[j] = minWeight + (weights(v, j));
-						//cout << "CHANGING SMALLEST WEIGHT TO " << smallestWeight[j] << endl;
 					}
 				}
 			}
 		}
 	}
-	
 }
  
 bool compareFirstColumn(const graphEdge& x, const graphEdge& y) {
@@ -206,8 +186,6 @@ void testRun() {
 
 	numNodes = 5;
 	numEdges = 10;
-
-
 }
 
 
@@ -226,8 +204,6 @@ void readFile() {
 		string line;
 		graphEdge edge;
 		while (getline(inFile, line)) {
-
-
 			if (line.at(0) == 'a' && line.at(1) == ' ') {
 				if (counter % 10000 == 0) {
 					cout << "Reading edge # " << counter << endl;
@@ -248,8 +224,6 @@ void readFile() {
 		}
 		numNodes = largestNode;
 		numEdges = counter;
-
-
 		//Create a zero node with an edge that points to itself with a weight of 0.
 		//The file node data starts at node #1, so we want to make 
 		//everything clean by letting edge 1 take index 1 in our graphWeights array,
@@ -264,8 +238,6 @@ void readFile() {
 }
 
 void createCsrArrays() {
-	//vector<int> graphWeights, dest, source;
-	
 	graphWeights = new int[numEdges];
 	columns = new int[numEdges];
 	rows = new int[numNodes+1];
@@ -275,8 +247,6 @@ void createCsrArrays() {
 	int ind = 0;
 	int j = 0;
 	for (int i = 0; i < edges.size(); i++) {
-		
-		
 		graphWeights[i] = edges[i].weight;
 		columns[i] = edges[i].destNode;
 		if (ind < edges[i].sourceNode) {
@@ -286,8 +256,6 @@ void createCsrArrays() {
 		
 	}
 	rows[++j] = edges.size();
-	
-
 }
 
 void deleteArrays() {
@@ -295,11 +263,9 @@ void deleteArrays() {
 	delete columns;
 	delete rows;
 	delete smallestWeight;
-
 }
 
 int main() {
-
 	cout << "Would you like to do: " << endl << "1. Test run" << endl << "2. Full run" << endl << "Enter your selection: ";
 	int selection;
 	cin >> selection;
@@ -346,7 +312,6 @@ int main() {
 	cin >> userNode;
 
 	shortestPath(userNode);
-
 	do {
 		cout << "Which node do you want to see weights for (-1 to exit): ";
 		cin >> userNode;
@@ -361,7 +326,6 @@ int main() {
 			cerr << "Error: That's no node with that ID!" << endl;
 		}
 	} while (true);
-	
 	
 	deleteArrays();
 
